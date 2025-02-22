@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Model } from './repository.model';
+
+/* eslint-disable */
+debugger
 
 @Component({
   selector: 'app-root',
