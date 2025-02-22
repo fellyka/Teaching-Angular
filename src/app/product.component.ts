@@ -21,7 +21,14 @@ export class ProductComponent {
 
   get message(): string {
     return `${this.messages[this.index]}: ${this.total}`;
+  }
 
+  toggleMessage(){
+    this.index = (this.index +1) % 2;
+  }
+
+  removeProduct() {
+    this.model.deleteProduct(this.model.getProducts()[0].id ?? 0);
   }
 }
 
