@@ -27,12 +27,24 @@ export class ProductComponent {
            return result;
       }
 
-  get message(): string {
-    /*The value of a signal is read by invoking the signal as a function, like: this.index()*/
-    let result = `${this.messages[this.index()]}: ${this.total}`;
-    console.log(`message value read: ${result}`);
-    return result;
-  }
+  // get message(): string {
+  //   /*The value of a signal is read by invoking the signal as a function, like: this.index()*/
+  //   let result = `${this.messages[this.index()]}: ${this.total}`;
+  //   console.log(`message value read: ${result}`);
+  //   return result;
+  // }
+
+  /*Computed signals are created using the computed fx, which accepts a fx that produces a value.
+    When a fx is invoked, Angular keeps track track of the signals whose values are read in order
+    to understand the relationship between data values.
+  */
+  message = computed<string>(
+    ()=>{
+      let result = `${this.messages[this.index()]}: ${this.total}`;
+      console.log(`message value read: ${result}`);
+      return result;
+    }
+  );
 
 
   toggleMessage(){
