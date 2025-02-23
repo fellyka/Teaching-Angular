@@ -1,5 +1,6 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { Model } from './repository.model';
+import { Ticker } from './ticker.model';
 
 @Component({
   selector: 'app',
@@ -9,6 +10,12 @@ export class ProductComponent {
   private model: Model = new Model();
   private  messages = ["Total","Price"];
   private index = signal<number>(0);
+  private ticker = new Ticker();
+  tickerValue = 0;
+
+  constructor(){
+    this.ticker.value.subscribe((v)=>this.tickerValue = v);
+  }
 
   get count(): number {
     let result = this.model.getProducts().length;
@@ -38,14 +45,16 @@ export class ProductComponent {
     When a fx is invoked, Angular keeps track track of the signals whose values are read in order
     to understand the relationship between data values.
   */
-  message = computed<string>(
-    ()=>{
-      let result = `${this.messages[this.index()]}: ${this.total}`;
-      console.log(`message value read: ${result}`);
-      return result;
-    }
-  );
+  // message = computed<string>(
+  //   ()=>{
+  //     let result = `${this.messages[this.index()]}: ${this.total}`;
+  //     console.log(`message value read: ${result}`);
+  //     return result;
+  //   }
+  // );
 
+  message = computed<string>(()=>`${this.messages[this.index()]}: ${this.total}`);
+  messageEffect = effect(()=>console.log(`message value read: ${this.message}`));
 
   toggleMessage(){
     console.clear();
