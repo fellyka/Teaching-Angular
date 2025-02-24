@@ -1,6 +1,7 @@
 import { Component, computed, effect, signal } from '@angular/core';
 import { Model } from './repository.model';
 import { Ticker } from './ticker.model';
+import { Product } from './product.model';
 
 @Component({
   selector: 'app',
@@ -8,71 +9,26 @@ import { Ticker } from './ticker.model';
 })
 export class ProductComponent {
   private model: Model = new Model();
-  private  messages = ["Total","Price"];
-  private index = signal<number>(0);
-  private ticker = new Ticker();
-  tickerValue = 0;
 
-  constructor(){
-    this.ticker.value.subscribe((v)=>this.tickerValue = v);
+ products = computed<Product[]>(() => this.model.getProducts());
+ count = computed<number>(() => this.model.getProducts().length);
+
+ classes = computed<string>( ()=>
+   this.count() === 5 ? "bg-success" : "bg-warning")
+
+ someInfo: string = "bg-info text-white text-center";
+
+ sayHello():void{
+    console.log("Hello");
+ }
+
+ getClasses(key: number) {
+  return "p-2 " + (((this.products()[key].price ?? 0) > 50)
+  ? "bg-info" : "bg-warning");
   }
 
-  get count(): number {
-    let result = this.model.getProducts().length;
-    // let total = 0;
-    //     for (let i = 0; i < 1000000000; i++) {
-    //       total += i;
-    //     }
-    console.log(`count value read: ${result}`);
-    return result;
-      }
+ Name = "Product Component";
 
-      get total(): number {
-        let result = this.model.getProducts().length;
-
-           console.log(`total value read: ${result}`);
-           return result;
-      }
-
-  // get message(): string {
-  //   /*The value of a signal is read by invoking the signal as a function, like: this.index()*/
-  //   let result = `${this.messages[this.index()]}: ${this.total}`;
-  //   console.log(`message value read: ${result}`);
-  //   return result;
-  // }
-
-  /*Computed signals are created using the computed fx, which accepts a fx that produces a value.
-    When a fx is invoked, Angular keeps track track of the signals whose values are read in order
-    to understand the relationship between data values.
-  */
-  // message = computed<string>(
-  //   ()=>{
-  //     let result = `${this.messages[this.index()]}: ${this.total}`;
-  //     console.log(`message value read: ${result}`);
-  //     return result;
-  //   }
-  // );
-
-  message = computed<string>(()=>`${this.messages[this.index()]}: ${this.total}`);
-  messageEffect = effect(()=>console.log(`message value read: ${this.message}`));
-
-  toggleMessage(){
-    console.clear();
-    console.log(`message value read: ${this.message}`);
-   // this.index = (this.index +1) % 2;
-   /*Unlike a normal Javascript value, signals are not modified using the assignment operator.
-     Instead, signals are modified using one the following methods: ste=>accept a new value for the signal,
-     update => accepts a fx that receives the current signal value and returns a new vale, mutate => this method
-     accepts a fx that receives the current signal value and modifies it in place
-     asReadonly =>a method that returns Signal<T> object, which provides a read-only version of the signal.*/
-   this.index.update(currentVal => (currentVal + 1) % 2);
-  }
-
-  removeProduct() {
-    console.clear();
-    console.log(`removeProduct() called`);
-    this.model.deleteProduct(this.model.getProducts()[0].id ?? 0);
-  }
 }
 
 
