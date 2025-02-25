@@ -1,50 +1,16 @@
-<div [ngClass]="classes()">
-  Hello, World!
-</div>
-
-<div [ngClass]="'someInfo'">
-  Hello, World!
-</div>
-
-<div [ngClass]="someInfo">
-  A sample Test to understand Data Binding
-</div>
-
-<br>
-<label for="productName">Product Name:</label>
-<input id="productName" class="form-control" [value]="products()[1].name"
-       title="Product Name" placeholder="Enter product name"
-       style="font-size: 14px; padding: 5px; width: 200px;">
-<br>
-
-<button [ngClass]="someInfo" (click)="sayHello()" title="Say Hello"
-        style="background-color: #4CAF50; color: white;
-        border: none; border-radius: 10px; padding: 10px 20px;
-        font-size: 16px; cursor: pointer;">
-  Click Me
-</button>
-<br>
-<hr>
-
 <div class="text-white">
-  <div [class]="getClasses(0)">
-  The first product is {{ products()[0].name }}
-  </div>
-  <hr>
-  <div [class]="getClasses(1)">
-  The second product is {{ products()[1].name }}
+  <div class="bg-info p-2">
+  There are {{ count() }} products.
   </div>
  </div>
- <hr>
+ <button class="btn btn-info text-white mt-2" (click)="removeProduct()">
+  Remove
+ </button>
 
-<br>
-<table class="table mt-2">
-   <tr>
-    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
-   </tr>
-   <tr>
-     <td [attr.colspan]="count()">
-       {{ products()[1].name }}
-     </td>
-   </tr>
-</table>
+ <div *ngIf="count() > 4" class="bg-danger p-2 mt-1">
+  There are more than 4 products in the model
+ </div>
+
+ <div *ngIf="product(0)?.name != 'Kayak'" class="bg-info p-2 mt-1">
+  The first product isn't Kayak
+  </div>
