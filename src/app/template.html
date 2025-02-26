@@ -14,3 +14,22 @@
  <div *ngIf="product(0)?.name !== 'Kayak'" class="bg-info p-2 mt-1">
   The first product isn't Kayak
   </div>
+  <div class="p-1">
+    <table class="table table-sm table-bordered text-dark"> 
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+      </tr>
+      <tr *ngFor="let product of products(); let i = index; let c = count; trackBy:getKey">
+        <td>{{i + 1}} of {{c}}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.price }}</td>
+      </tr>
+    </table>
+  </div>
+  <button class="btn btn-info text-white mt-2 mx-2" (click)="swapProduct()">
+    Swap
+    </button>
