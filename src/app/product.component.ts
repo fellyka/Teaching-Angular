@@ -33,6 +33,8 @@ export class ProductComponent {
       return product.name;
       }
 
+    selectedProduct = signal<string | undefined>(undefined);
+
 }
 
 
