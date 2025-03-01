@@ -35,6 +35,10 @@ export class ProductComponent {
 
     selectedProduct = signal<string | undefined>(undefined);
 
+    getSelected(product: Product):boolean{
+      return product.name == this.selectedProduct();
+    }
+
 }
 
 

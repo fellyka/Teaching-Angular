@@ -25,7 +25,8 @@
         <th>Category</th>
         <th>Price</th>
       </tr>
-      <tr *ngFor="let product of products(); let i = index; let c = count; trackBy:getKey">
+      <tr *ngFor="let product of products(); let i = index; let c = count; trackBy:getKey"
+      [class.bg-info]="getSelected(product)">
         <td (mouseover)="selectedProduct.set(product.name)">{{i+1}}</td>
         <td>{{i + 1}} of {{c}}</td>
         <td>{{ product.name }}</td>
@@ -33,6 +34,11 @@
         <td>{{ product.price }}</td>
       </tr>
     </table>
+    <div class="form-group">
+      <label>Product Name</label>
+      <input class="form-control"
+      (input)="selectedProduct.set($any($event).target.value)" />
+      </div>
   </div>
   <button class="btn btn-info text-white mt-2 mx-2" (click)="swapProduct()">
     Swap
